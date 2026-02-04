@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>달력 - 내 일정</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/calendar.css">
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <a href="/" class="back-btn">←</a>
+                <div class="logo">
+                    <span class="logo-icon">📅</span>
+                    <span class="logo-text">달력</span>
+                </div>
+                <div class="header-spacer"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="container py-3">
+            <!-- 월 네비게이션 -->
+            <div class="month-nav">
+                <button class="btn btn-month-nav" id="prevMonth">◀</button>
+                <h2 class="current-month" id="currentMonth">2026년 2월</h2>
+                <button class="btn btn-month-nav" id="nextMonth">▶</button>
+            </div>
+
+            <!-- 요일 헤더 -->
+            <div class="calendar-weekdays">
+                <div class="weekday sun">일</div>
+                <div class="weekday">월</div>
+                <div class="weekday">화</div>
+                <div class="weekday">수</div>
+                <div class="weekday">목</div>
+                <div class="weekday">금</div>
+                <div class="weekday sat">토</div>
+            </div>
+
+            <!-- 달력 그리드 -->
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- JavaScript로 동적 생성 -->
+            </div>
+
+            <!-- 선택된 날짜의 일정 -->
+            <div class="selected-date-schedules" id="selectedDateSection" style="display:none;">
+                <div class="section-header">
+                    <h3 class="section-title" id="selectedDateTitle">2월 4일 일정</h3>
+                    <button class="btn btn-add-schedule" onclick="openScheduleModalForDate()">+ 추가</button>
+                </div>
+                <div class="schedule-list" id="selectedDateList">
+                    <div class="text-center text-muted py-4">일정이 없습니다</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p class="footer-text">© 2026 시니어 일정 관리</p>
+        </div>
+    </footer>
+
+    <!-- 일정 상세 모달 -->
+    <div class="modal fade" id="scheduleDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailModalTitle">일정 상세</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="schedule-detail">
+                        <div class="detail-icon" id="detailIcon">🏥</div>
+                        <div class="detail-title" id="detailTitle">병원 진료</div>
+                        <div class="detail-time" id="detailTime">오전 10시</div>
+                        <div class="detail-desc" id="detailDesc"></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-lg" id="btnDeleteDetail" onclick="deleteScheduleFromDetail()">삭제</button>
+                    <button type="button" class="btn btn-success btn-lg" id="btnCompleteDetail" onclick="completeScheduleFromDetail()">완료</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 일정 추가 모달 -->
+    <div class="modal fade" id="addScheduleModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">일정 추가</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addScheduleForm">
+                        <input type="hidden" id="addScheduleDate">
+                        
+                        <!-- 카테고리 선택 (아이콘 버튼) -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">종류</label>
+                            <div class="category-buttons" id="categoryButtons">
+                                <!-- JavaScript로 동적 생성 -->
+                            </div>
+                            <input type="hidden" id="addScheduleCategory">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">제목</label>
+                            <input type="text" class="form-control form-control-lg" id="addScheduleTitle" 
+                                   placeholder="예: 내과 진료" required>
+                        </div>
+
+                        <!-- 시간 선택 (큰 버튼) -->
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">시간</label>
+                            <div class="time-buttons">
+                                <button type="button" class="btn btn-time-select" data-time="08:00">아침<br>8시</button>
+                                <button type="button" class="btn btn-time-select" data-time="12:00">점심<br>12시</button>
+                                <button type="button" class="btn btn-time-select" data-time="18:00">저녁<br>6시</button>
+                            </div>
+                            <input type="hidden" id="addScheduleTime">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="submitAddSchedule()">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/js/calendar.js"></script>
+</body>
+</html>

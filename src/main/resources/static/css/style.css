@@ -1,0 +1,580 @@
+/* 미드센츄리 모던 스타일 - 시니어 친화적 */
+
+:root {
+    --color-hospital: #D84315;
+    --color-medicine: #558B2F;
+    --color-primary: #2C5F6F;
+    --color-accent: #D4A574;
+    --color-bg: #F5F1E8;
+    --color-card: #FFFFFF;
+    --color-text: #2D2D2D;
+    --color-text-light: #6B6B6B;
+    --font-size-base: 18px;
+    --header-height: 80px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', 'Malgun Gothic', sans-serif;
+    font-size: var(--font-size-base);
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+/* Fixed Header */
+.main-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    background: linear-gradient(135deg, var(--color-primary) 0%, #3d7a8a 100%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+    padding: 0 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+}
+
+.logo-text {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+}
+
+.header-date {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-top: var(--header-height);
+    min-height: calc(100vh - var(--header-height) - 60px);
+    padding-bottom: 40px;
+}
+
+/* Footer */
+.main-footer {
+    background-color: var(--color-primary);
+    color: white;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: auto;
+}
+
+.footer-text {
+    margin: 0;
+    font-size: 0.95rem;
+    opacity: 0.9;
+}
+
+/* Section Styles */
+.section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 20px;
+    position: relative;
+    padding-left: 16px;
+}
+
+.section-title::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 24px;
+    background-color: var(--color-accent);
+    border-radius: 3px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.count-badge {
+    background: linear-gradient(135deg, var(--color-primary), #3d7a8a);
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(44, 95, 111, 0.3);
+}
+
+.btn-link {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-link:hover {
+    background-color: rgba(44, 95, 111, 0.1);
+    color: var(--color-primary);
+}
+
+/* 큰 버튼 스타일 */
+.btn-lg {
+    font-size: 1.2rem;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+/* 빠른 등록 버튼 - 미드센츄리 스타일 */
+.quick-actions-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    max-width: 600px;
+}
+
+.btn-quick {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    border-radius: 20px;
+    border: none;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    min-height: 140px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.btn-quick::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(255, 255, 255, 0.2) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-quick:hover::before {
+    opacity: 1;
+}
+
+.btn-quick .icon {
+    font-size: 3.5rem;
+    margin-bottom: 12px;
+    filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.btn-quick .label {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.btn-quick:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.btn-quick:active {
+    transform: translateY(-2px);
+}
+
+.btn-hospital {
+    background: linear-gradient(135deg, #D84315 0%, #F4511E 100%);
+    color: white;
+}
+
+.btn-medicine {
+    background: linear-gradient(135deg, #558B2F 0%, #689F38 100%);
+    color: white;
+}
+
+/* 일정 목록 - 미드센츄리 카드 스타일 */
+.schedule-list {
+    background: var(--color-card);
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(44, 95, 111, 0.1);
+}
+
+/* 일정 아이템 - 미드센츄리 스타일 */
+.schedule-item {
+    display: flex;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid rgba(44, 95, 111, 0.08);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.schedule-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: var(--color-accent);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.schedule-item:hover::before {
+    opacity: 1;
+}
+
+.schedule-item:last-child {
+    border-bottom: none;
+}
+
+.schedule-item:hover {
+    background-color: rgba(44, 95, 111, 0.03);
+}
+
+.schedule-item .icon {
+    font-size: 2.2rem;
+    margin-right: 20px;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-item .content {
+    flex: 1;
+}
+
+.schedule-item .title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 6px;
+    color: var(--color-text);
+    letter-spacing: -0.3px;
+}
+
+.schedule-item .time {
+    font-size: 1.05rem;
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+
+.schedule-item .status-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 3px solid var(--color-accent);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.schedule-item .status-btn:hover {
+    border-color: var(--color-medicine);
+    background-color: rgba(85, 139, 47, 0.1);
+    transform: scale(1.05);
+}
+
+.schedule-item.completed .status-btn {
+    border-color: var(--color-medicine);
+    background: linear-gradient(135deg, #558B2F, #689F38);
+    color: white;
+}
+
+.schedule-item.completed .title {
+    text-decoration: line-through;
+    color: var(--color-text-light);
+    opacity: 0.7;
+}
+
+/* 카테고리별 아이콘 배경 - 미드센츄리 색상 */
+.icon-hospital { 
+    background: linear-gradient(135deg, rgba(216, 67, 21, 0.15), rgba(244, 81, 30, 0.15));
+}
+.icon-medicine { 
+    background: linear-gradient(135deg, rgba(85, 139, 47, 0.15), rgba(104, 159, 56, 0.15));
+}
+.icon-exercise { 
+    background: linear-gradient(135deg, rgba(44, 95, 111, 0.15), rgba(61, 122, 138, 0.15));
+}
+.icon-family { 
+    background: linear-gradient(135deg, rgba(212, 165, 116, 0.15), rgba(212, 165, 116, 0.2));
+}
+.icon-other { 
+    background: linear-gradient(135deg, rgba(107, 107, 107, 0.15), rgba(107, 107, 107, 0.2));
+}
+
+/* 폼 컨트롤 크기 */
+.form-control-lg, .form-select-lg {
+    font-size: 1.2rem;
+    padding: 12px 16px;
+}
+
+.form-label {
+    font-size: 1.1rem;
+}
+
+/* 모달 - 미드센츄리 스타일 */
+.modal-content {
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: 2px solid var(--color-accent);
+    padding: 24px 28px;
+    background: linear-gradient(135deg, rgba(44, 95, 111, 0.05), rgba(212, 165, 116, 0.05));
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.modal-body {
+    padding: 24px 28px;
+}
+
+.modal-footer {
+    border-top: none;
+    padding: 16px 28px 24px;
+    background-color: rgba(245, 241, 232, 0.5);
+}
+
+/* 날짜 표시 - 미드센츄리 스타일 */
+.date-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    background: linear-gradient(135deg, var(--color-primary), #3d7a8a);
+    color: white;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 8px rgba(44, 95, 111, 0.2);
+}
+
+/* 시니어 친화적 날짜/시간 선택 */
+.date-picker-simple,
+.time-picker-simple {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.btn-date-option,
+.btn-time-option {
+    padding: 18px 14px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: 3px solid var(--color-accent);
+    border-radius: 14px;
+    background: white;
+    color: var(--color-text);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.btn-date-option:hover,
+.btn-time-option:hover {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, rgba(44, 95, 111, 0.08), rgba(212, 165, 116, 0.08));
+    color: var(--color-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.btn-date-option.active,
+.btn-time-option.active {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), #3d7a8a);
+    color: white;
+    box-shadow: 0 4px 16px rgba(44, 95, 111, 0.3);
+}
+
+.selected-date-display,
+.selected-time-display {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-align: center;
+    padding: 14px;
+    background: linear-gradient(135deg, rgba(44, 95, 111, 0.08), rgba(212, 165, 116, 0.08));
+    border-radius: 12px;
+    border: 2px solid var(--color-accent);
+}
+
+.time-custom-picker {
+    display: flex;
+    gap: 10px;
+}
+
+.time-custom-picker select {
+    flex: 1;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+    :root {
+        --font-size-base: 17px;
+        --header-height: 70px;
+    }
+    
+    .logo-text {
+        font-size: 1.5rem;
+    }
+    
+    .header-date {
+        font-size: 0.9rem;
+    }
+    
+    .quick-actions-grid {
+        gap: 16px;
+    }
+    
+    .btn-quick {
+        padding: 28px 16px;
+        min-height: 120px;
+    }
+    
+    .btn-quick .icon {
+        font-size: 3rem;
+    }
+    
+    .btn-quick .label {
+        font-size: 1.2rem;
+    }
+    
+    .section-title {
+        font-size: 1.3rem;
+    }
+    
+    .schedule-item {
+        padding: 16px 20px;
+    }
+    
+    .schedule-item .icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.8rem;
+        margin-right: 16px;
+    }
+    
+    .schedule-item .title {
+        font-size: 1.15rem;
+    }
+    
+    .schedule-item .status-btn {
+        width: 46px;
+        height: 46px;
+    }
+}
+
+@media (max-width: 576px) {
+    .header-content {
+        padding: 0 16px;
+    }
+    
+    .logo-icon {
+        font-size: 2rem;
+    }
+    
+    .logo-text {
+        font-size: 1.3rem;
+    }
+}
+
+/* 폼 컨트롤 미드센츄리 스타일 */
+.form-control,
+.form-select {
+    border: 2px solid var(--color-accent);
+    border-radius: 10px;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 0.2rem rgba(44, 95, 111, 0.15);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--color-primary), #3d7a8a);
+    border: none;
+    box-shadow: 0 4px 12px rgba(44, 95, 111, 0.3);
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, #3d7a8a, var(--color-primary));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(44, 95, 111, 0.4);
+}
+
+.btn-secondary {
+    background-color: var(--color-accent);
+    border: none;
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+.btn-secondary:hover {
+    background-color: #c89a68;
+    color: var(--color-text);
+}
+
+.btn-danger {
+    background: linear-gradient(135deg, #D84315, #F4511E);
+    border: none;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #F4511E, #D84315);
+}

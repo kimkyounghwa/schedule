@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aloha.seniorschedule.mapper.ScheduleMapper">
+
+    <resultMap id="ScheduleWithCategory" type="Schedule">
+        <id property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="title" column="title"/>
+        <result property="description" column="description"/>
+        <result property="scheduleDate" column="schedule_date"/>
+        <result property="scheduleTime" column="schedule_time"/>
+        <result property="status" column="status"/>
+        <result property="remindBefore" column="remind_before"/>
+        <result property="isRecurring" column="is_recurring"/>
+        <result property="recurringType" column="recurring_type"/>
+        <result property="recurringEndDate" column="recurring_end_date"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="categoryIcon" column="category_icon"/>
+        <result property="categoryColor" column="category_color"/>
+    </resultMap>
+
+    <sql id="selectWithCategory">
+        SELECT s.*, 
+               c.name AS category_name, 
+               c.icon AS category_icon, 
+               c.color AS category_color
+        FROM schedule s
+        LEFT JOIN schedule_category c ON s.category_id = c.id
+    </sql>
+
+    <select id="selectByUserId" resultMap="ScheduleWithCategory">
+        <include refid="selectWithCategory"/>
+        WHERE s.user_id = #{userId}
+        ORDER BY s.schedule_date ASC, s.schedule_time ASC
+    </select>
+
+    <select id="selectByUserIdAndDate" resultMap="ScheduleWithCategory">
+        <include refid="selectWithCategory"/>
+        WHERE s.user_id = #{userId} AND s.schedule_date = #{date}
+        ORDER BY s.schedule_time ASC
+    </select>
+
+    <select id="selectByUserIdAndDateRange" resultMap="ScheduleWithCategory">
+        <include refid="selectWithCategory"/>
+        WHERE s.user_id = #{userId} 
+          AND s.schedule_date BETWEEN #{startDate} AND #{endDate}
+        ORDER BY s.schedule_date ASC, s.schedule_time ASC
+    </select>
+
+    <select id="selectByUserIdAndStatus" resultMap="ScheduleWithCategory">
+        <include refid="selectWithCategory"/>
+        WHERE s.user_id = #{userId} AND s.status = #{status}
+        ORDER BY s.schedule_date ASC, s.schedule_time ASC
+    </select>
+
+    <select id="selectById" resultMap="ScheduleWithCategory">
+        <include refid="selectWithCategory"/>
+        WHERE s.id = #{id}
+    </select>
+
+    <insert id="insert">
+        INSERT INTO schedule (id, user_id, category_id, title, description, 
+                              schedule_date, schedule_time, status, remind_before,
+                              is_recurring, recurring_type, recurring_end_date)
+        VALUES (#{id}, #{userId}, #{categoryId}, #{title}, #{description},
+                #{scheduleDate}, #{scheduleTime}, #{status}, #{remindBefore},
+                #{isRecurring}, #{recurringType}, #{recurringEndDate})
+    </insert>
+
+    <update id="update">
+        UPDATE schedule SET
+            category_id = #{categoryId},
+            title = #{title},
+            description = #{description},
+            schedule_date = #{scheduleDate},
+            schedule_time = #{scheduleTime},
+            remind_before = #{remindBefore},
+            is_recurring = #{isRecurring},
+            recurring_type = #{recurringType},
+            recurring_end_date = #{recurringEndDate},
+            updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <update id="updateStatus">
+        UPDATE schedule SET status = #{status}, updated_at = NOW()
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM schedule WHERE id = #{id}
+    </delete>
+
+    <select id="countByUserIdAndStatus" resultType="int">
+        SELECT COUNT(*) FROM schedule 
+        WHERE user_id = #{userId} AND status = #{status}
+    </select>
+
+    <select id="countTodayByUserId" resultType="int">
+        SELECT COUNT(*) FROM schedule 
+        WHERE user_id = #{userId} AND schedule_date = #{today}
+    </select>
+
+</mapper>

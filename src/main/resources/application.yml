@@ -1,0 +1,36 @@
+server:
+  port: 8085
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: senior-schedule
+  
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/senior_schedule?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true
+    username: aloha
+    password: 123456
+  
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+  type-aliases-package: com.aloha.seniorschedule.dto
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  secret: senior-schedule-jwt-secret-key-must-be-at-least-256-bits-long-for-hs256
+  expiration:
+    access: 3600000
+    refresh: 604800000
+
+logging:
+  level:
+    com.aloha.seniorschedule: DEBUG
+    org.springframework.security: DEBUG

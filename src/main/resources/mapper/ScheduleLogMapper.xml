@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aloha.seniorschedule.mapper.ScheduleLogMapper">
+
+    <select id="selectByScheduleId" resultType="ScheduleLog">
+        SELECT * FROM schedule_log 
+        WHERE schedule_id = #{scheduleId}
+        ORDER BY action_at DESC
+    </select>
+
+    <insert id="insert">
+        INSERT INTO schedule_log (id, schedule_id, action, old_status, new_status, note)
+        VALUES (#{id}, #{scheduleId}, #{action}, #{oldStatus}, #{newStatus}, #{note})
+    </insert>
+
+</mapper>
