@@ -174,6 +174,17 @@ public class ScheduleController {
         }
     }
 
+    @DeleteMapping("/all")
+    public ApiResponse<Void> deleteAllSchedules() {
+        try {
+            scheduleService.deleteAllSchedules(DEFAULT_USER_ID);
+            return ApiResponse.ok();
+        } catch (Exception e) {
+            log.error("모든 일정 삭제 실패", e);
+            return ApiResponse.error("모든 일정을 삭제하지 못했습니다.");
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ApiResponse<Void> deleteSchedule(@PathVariable String id) {
         try {

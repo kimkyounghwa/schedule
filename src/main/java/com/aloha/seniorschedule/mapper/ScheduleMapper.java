@@ -21,6 +21,7 @@ public interface ScheduleMapper {
     int update(Schedule schedule);
     int updateStatus(@Param("id") String id, @Param("status") String status);
     int delete(@Param("id") String id);
+    int deleteAllByUserId(@Param("userId") String userId);
     int countByUserIdAndStatus(@Param("userId") String userId, @Param("status") String status);
     int countTodayByUserId(@Param("userId") String userId, @Param("today") LocalDate today);
 }

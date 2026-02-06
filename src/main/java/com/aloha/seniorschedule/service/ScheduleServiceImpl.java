@@ -1,6 +1,5 @@
 package com.aloha.seniorschedule.service;
 
-import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.List;
@@ -49,9 +48,8 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public List<Schedule> getWeekSchedules(String userId) {
         LocalDate today = LocalDate.now();
-        LocalDate startOfWeek = today.with(DayOfWeek.MONDAY);
-        LocalDate endOfWeek = today.with(DayOfWeek.SUNDAY);
-        return scheduleMapper.selectByUserIdAndDateRange(userId, startOfWeek, endOfWeek);
+        LocalDate endDate = today.plusDays(7);
+        return scheduleMapper.selectByUserIdAndDateRange(userId, today, endDate);
     }
 
     @Override
@@ -108,13 +106,26 @@ public class ScheduleServiceImpl implements ScheduleService {
 
         LocalDate startDate = request.getScheduleDate() != null ? request.getScheduleDate() : LocalDate.now();
         boolean isRecurring = request.getIsRecurring() != null && request.getIsRecurring();
+        Schedule.RecurringType recurringType = request.getRecurringType();
         
-        // 반복 일정인 경우 30일간 일정 생성
-        int daysToCreate = isRecurring ? 30 : 1;
+        // 반복 타입에 따라 일정 생성 횟수와 간격 결정
+        int totalDays = 30;
+        int interval = 1;
+        if (isRecurring && recurringType != null) {
+            switch (recurringType) {
+                case DAILY:        interval = 1; totalDays = 30; break;
+                case DAILY_3:      interval = 1; totalDays = 3;  break;
+                case DAILY_7:      interval = 1; totalDays = 7;  break;
+                case EVERY_3_DAYS: interval = 3; totalDays = 30; break;
+                case WEEKLY:       interval = 7; totalDays = 56; break;
+                default:           interval = 1; totalDays = 30; break;
+            }
+        }
+        int schedulesToCreate = isRecurring ? (totalDays / interval) : 1;
         String firstScheduleId = null;
         
-        for (int i = 0; i < daysToCreate; i++) {
-            LocalDate scheduleDate = startDate.plusDays(i);
+        for (int i = 0; i < schedulesToCreate; i++) {
+            LocalDate scheduleDate = startDate.plusDays(i * interval);
             
             Schedule schedule = Schedule.builder()
                     .id(UUID.randomUUID().toString())
@@ -126,7 +137,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .status(Schedule.Status.PENDING)
                     .remindBefore(30)
                     .isRecurring(isRecurring)
-                    .recurringType(isRecurring ? Schedule.RecurringType.DAILY : null)
+                    .recurringType(recurringType)
                     .build();
 
             scheduleMapper.insert(schedule);
@@ -206,6 +217,12 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .build());
 
         scheduleMapper.delete(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAllSchedules(String userId) {
+        scheduleMapper.deleteAllByUserId(userId);
     }
 
     @Override

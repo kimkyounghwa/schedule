@@ -19,6 +19,7 @@ public interface ScheduleService {
     Schedule updateSchedule(String id, Schedule.Request request);
     void updateStatus(String id, Schedule.StatusRequest request);
     void deleteSchedule(String id);
+    void deleteAllSchedules(String userId);
     List<ScheduleLog> getScheduleLogs(String scheduleId);
     int countPendingSchedules(String userId);
     int countTodaySchedules(String userId);

@@ -1,0 +1,14 @@
+# Gradle
+.gradle/
+build/
+
+# IDE
+.vscode/
+
+# Compiled classes
+bin/
+
+# WAR/JAR
+*.war
+*.jar
+!gradle/wrapper/gradle-wrapper.jar

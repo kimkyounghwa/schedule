@@ -147,6 +147,116 @@ body {
     color: var(--color-primary);
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.btn-toggle {
+    background: var(--color-accent);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-toggle:hover {
+    background: #c49664;
+}
+
+.schedule-list.collapsed {
+    display: none;
+}
+
+/* 주간 일정 - schedule-list 카드 스타일 제거 */
+.week-schedules .schedule-list {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+    overflow: visible;
+}
+
+/* 주간 일정 - 날짜별 한 줄 표시 */
+.week-day-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--color-card);
+    border-radius: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.week-day-row:hover {
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.week-date {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    min-width: 100px;
+    white-space: nowrap;
+}
+
+.week-icons {
+    font-size: 1.2rem;
+    min-width: 50px;
+}
+
+.week-titles {
+    flex: 1;
+    font-size: 1rem;
+    color: var(--color-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.week-count {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: white;
+    background: var(--color-accent);
+    padding: 4px 10px;
+    border-radius: 12px;
+    white-space: nowrap;
+}
+
+/* 날짜 상세 보기 */
+.day-detail-view {
+    padding: 0;
+    background: var(--color-card);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(44, 95, 111, 0.1);
+    overflow: hidden;
+}
+
+.day-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+    padding: 14px 20px;
+    border-bottom: 1px solid rgba(44, 95, 111, 0.08);
+}
+
+.day-detail-date {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
 /* 큰 버튼 스타일 */
 .btn-lg {
     font-size: 1.2rem;
@@ -160,7 +270,6 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    max-width: 600px;
 }
 
 .btn-quick {
@@ -401,12 +510,87 @@ body {
     box-shadow: 0 2px 8px rgba(44, 95, 111, 0.2);
 }
 
+/* 컴팩트 모달 */
+.compact-modal {
+    padding: 16px 20px !important;
+}
+
+.compact-modal .form-label {
+    font-size: 0.95rem;
+}
+
+.compact-modal .form-control {
+    padding: 8px 12px;
+    font-size: 1rem;
+}
+
+/* 컴팩트 버튼 그룹 */
+.btn-group-compact {
+    display: flex;
+    gap: 6px;
+}
+
+.btn-group-compact .btn {
+    flex: 1;
+}
+
+/* 반복 옵션 버튼 */
+.btn-repeat-option {
+    padding: 10px 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: 2px solid var(--color-accent);
+    border-radius: 10px;
+    background: white;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+}
+
+.btn-repeat-option:hover {
+    border-color: var(--color-primary);
+    background: rgba(44, 95, 111, 0.06);
+}
+
+.btn-repeat-option.active {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), #3d7a8a);
+    color: white;
+}
+
 /* 시니어 친화적 날짜/시간 선택 */
 .date-picker-simple,
 .time-picker-simple {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+}
+
+.btn-group-compact .btn-date-option,
+.btn-group-compact .btn-time-option {
+    padding: 10px 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border: 2px solid var(--color-accent);
+    border-radius: 10px;
+    background: white;
+    color: var(--color-text);
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+.btn-group-compact .btn-date-option:hover,
+.btn-group-compact .btn-time-option:hover {
+    border-color: var(--color-primary);
+    transform: none;
+    box-shadow: none;
+}
+
+.btn-group-compact .btn-date-option.active,
+.btn-group-compact .btn-time-option.active {
+    border-color: var(--color-primary);
+    background: linear-gradient(135deg, var(--color-primary), #3d7a8a);
+    color: white;
+    box-shadow: none;
 }
 
 .btn-date-option,

@@ -48,6 +48,11 @@
                 <!-- JavaScript로 동적 생성 -->
             </div>
 
+            <!-- 모든 일정 삭제 -->
+            <div class="text-end mt-2 mb-3">
+                <button class="btn btn-outline-danger" onclick="deleteAllSchedules()">🗑 모든 일정 삭제</button>
+            </div>
+
             <!-- 선택된 날짜의 일정 -->
             <div class="selected-date-schedules" id="selectedDateSection" style="display:none;">
                 <div class="section-header">
@@ -100,34 +105,28 @@
                     <h5 class="modal-title">일정 추가</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body compact-modal">
                     <form id="addScheduleForm">
                         <input type="hidden" id="addScheduleDate">
-                        
-                        <!-- 카테고리 선택 (아이콘 버튼) -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">종류</label>
-                            <div class="category-buttons" id="categoryButtons">
-                                <!-- JavaScript로 동적 생성 -->
+                        <input type="hidden" id="addScheduleCategory">
+                        <input type="hidden" id="addScheduleTime">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">종류</label>
+                            <div class="btn-group-compact" id="categoryButtons">
                             </div>
-                            <input type="hidden" id="addScheduleCategory">
                         </div>
-
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">제목</label>
-                            <input type="text" class="form-control form-control-lg" id="addScheduleTitle" 
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">제목</label>
+                            <input type="text" class="form-control" id="addScheduleTitle" 
                                    placeholder="예: 내과 진료" required>
                         </div>
-
-                        <!-- 시간 선택 (큰 버튼) -->
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">시간</label>
-                            <div class="time-buttons">
-                                <button type="button" class="btn btn-time-select" data-time="08:00">아침<br>8시</button>
-                                <button type="button" class="btn btn-time-select" data-time="12:00">점심<br>12시</button>
-                                <button type="button" class="btn btn-time-select" data-time="18:00">저녁<br>6시</button>
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">시간</label>
+                            <div class="btn-group-compact">
+                                <button type="button" class="btn btn-time-select" data-time="08:00">아침 8시</button>
+                                <button type="button" class="btn btn-time-select" data-time="12:00">점심 12시</button>
+                                <button type="button" class="btn btn-time-select" data-time="18:00">저녁 6시</button>
                             </div>
-                            <input type="hidden" id="addScheduleTime">
                         </div>
                     </form>
                 </div>

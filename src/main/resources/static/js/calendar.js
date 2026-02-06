@@ -65,13 +65,11 @@ function loadCategories() {
 
 function renderCategoryButtons() {
     const container = document.getElementById('categoryButtons');
-    // 병원, 약 복용만 표시
-    const mainCategories = categories.filter(c => c.name === '병원' || c.name === '약 복용');
+    const mainCategories = categories.filter(c => c.name === '병원' || c.name === '약 복용' || c.name === '운동');
     
     container.innerHTML = mainCategories.map(cat => `
         <button type="button" class="btn btn-category" data-id="${cat.id}" data-name="${cat.name}">
-            <span class="icon">${cat.icon}</span>
-            <span class="label">${cat.name}</span>
+            ${cat.icon} ${cat.name}
         </button>
     `).join('');
 
@@ -361,6 +359,29 @@ function deleteScheduleFromDetail() {
     })
     .catch(err => {
         console.error('삭제 실패:', err);
+        alert('삭제에 실패했습니다');
+    });
+}
+
+function deleteAllSchedules() {
+    if (!confirm('정말 모든 일정을 삭제하시겠습니까?\n삭제된 일정은 복구할 수 없습니다.')) return;
+    if (!confirm('⚠️ 한 번 더 확인합니다.\n모든 일정이 영구 삭제됩니다. 계속하시겠습니까?')) return;
+    
+    fetch('/api/schedules/all', {
+        method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(result => {
+        if (result.success) {
+            alert('모든 일정이 삭제되었습니다.');
+            loadMonthSchedules();
+            document.getElementById('selectedDateSection').style.display = 'none';
+        } else {
+            alert(result.message || '삭제에 실패했습니다');
+        }
+    })
+    .catch(err => {
+        console.error('전체 삭제 실패:', err);
         alert('삭제에 실패했습니다');
     });
 }

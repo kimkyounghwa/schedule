@@ -39,7 +39,7 @@ public class Schedule {
     }
     
     public enum RecurringType {
-        DAILY, WEEKLY, MONTHLY
+        DAILY, DAILY_3, DAILY_7, EVERY_3_DAYS, WEEKLY, MONTHLY
     }
     
     // Request DTO

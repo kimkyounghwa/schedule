@@ -95,6 +95,10 @@
         DELETE FROM schedule WHERE id = #{id}
     </delete>
 
+    <delete id="deleteAllByUserId">
+        DELETE FROM schedule WHERE user_id = #{userId}
+    </delete>
+
     <select id="countByUserIdAndStatus" resultType="int">
         SELECT COUNT(*) FROM schedule 
         WHERE user_id = #{userId} AND status = #{status}
