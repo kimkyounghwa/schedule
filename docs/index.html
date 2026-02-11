@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내 일정 관리</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Fixed Header -->
+    <header class="main-header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <span class="logo-icon">📅</span>
+                    <span class="logo-text">내 일정</span>
+                </div>
+                <div class="header-date" id="todayDate"></div>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="container py-4">
+
+            <!-- 빠른 등록 버튼 -->
+            <section class="quick-actions mb-4">
+                <h2 class="section-title">빠른 등록</h2>
+                <div class="quick-actions-grid">
+                    <button class="btn btn-quick btn-hospital" onclick="openQuickModal('hospital')">
+                        <span class="bi bi-hospital"></span>
+                        <span class="label">병원</span>
+                    </button>
+                    <button class="btn btn-quick btn-medicine" onclick="openQuickModal('medicine')">
+                        <span class="bi bi-capsule"></span>
+                        <span class="label">약 복용</span>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 오늘 일정 -->
+            <section class="today-schedules mb-4">
+                <div class="section-header">
+                    <h2 class="section-title">오늘 할 일</h2>
+                    <span class="count-badge" id="todayCount">0</span>
+                </div>
+            <div id="todayList" class="schedule-list">
+                <div class="text-center text-muted py-4">오늘 일정이 없습니다</div>
+            </div>
+            </section>
+
+            <!-- 이번 주 일정 -->
+            <section class="week-schedules mb-4">
+                <div class="section-header">
+                    <h2 class="section-title">이번 주 일정</h2>
+                    <div class="header-actions">
+                        <button class="btn-toggle" id="weekToggle" onclick="toggleWeekList()">접기 ▲</button>
+                        <a href="calendar.html" class="btn-link">달력 보기</a>
+                    </div>
+                </div>
+            <div id="weekList" class="schedule-list">
+                <div class="text-center text-muted py-4">이번 주 일정이 없습니다</div>
+            </div>
+            </section>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <p class="footer-text">© 2026 시니어 일정 관리</p>
+        </div>
+    </footer>
+
+    <!-- 빠른 등록 모달 -->
+    <div class="modal fade" id="quickModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="quickModalTitle">빠른 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body compact-modal">
+                    <form id="quickForm">
+                        <input type="hidden" id="quickType">
+                        <input type="hidden" id="quickDate" required>
+                        <input type="hidden" id="quickTime">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">제목</label>
+                            <input type="text" class="form-control" id="quickTitle" 
+                                   placeholder="예: 내과 진료" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">날짜</label>
+                            <div class="btn-group-compact">
+                                <button type="button" class="btn btn-date-option active" data-days="0">오늘</button>
+                                <button type="button" class="btn btn-date-option" data-days="1">내일</button>
+                                <button type="button" class="btn btn-date-option" data-days="2">모레</button>
+                                <button type="button" class="btn btn-date-option" data-days="custom">선택</button>
+                            </div>
+                            <div id="quickCustomDateWrap" class="mt-1" style="display:none;">
+                                <input type="date" class="form-control" id="quickCustomDate">
+                            </div>
+                        </div>
+                        <div class="mb-2" id="quickTimeSection">
+                            <label class="form-label fw-bold mb-1">시간 <span id="quickTimeHint" class="text-muted" style="font-size:0.8rem; font-weight:normal;"></span></label>
+                            <div class="btn-group-compact">
+                                <button type="button" class="btn btn-time-option" data-time="08:00">아침 8시</button>
+                                <button type="button" class="btn btn-time-option" data-time="12:00">점심 12시</button>
+                                <button type="button" class="btn btn-time-option" data-time="18:00">저녁 6시</button>
+                            </div>
+                        </div>
+                        <div class="mb-2" id="quickRecurringSection" style="display:none;">
+                            <label class="form-label fw-bold mb-1">반복</label>
+                            <div class="btn-group-compact">
+                                <button type="button" class="btn btn-repeat-option" data-repeat="NONE">반복 없음</button>
+                                <button type="button" class="btn btn-repeat-option" data-repeat="DAILY_3">3일 반복</button>
+                                <button type="button" class="btn btn-repeat-option" data-repeat="DAILY_7">7일 반복</button>
+                            </div>
+                        </div>
+                        <input type="hidden" id="quickRecurring">
+                        <input type="hidden" id="quickRecurringType">
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="submitQuickForm()">등록</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 일정 상세/수정 모달 -->
+    <div class="modal fade" id="scheduleModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scheduleModalTitle">일정 등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body compact-modal">
+                    <form id="scheduleForm">
+                        <input type="hidden" id="scheduleId">
+                        <input type="hidden" id="scheduleDate" required>
+                        <input type="hidden" id="scheduleTime">
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">카테고리</label>
+                            <select class="form-select" id="scheduleCategory" required>
+                            </select>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">제목</label>
+                            <input type="text" class="form-control" id="scheduleTitle" required>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">날짜</label>
+                            <div class="btn-group-compact" id="scheduleDatePicker">
+                                <button type="button" class="btn btn-date-option active" data-days="0">오늘</button>
+                                <button type="button" class="btn btn-date-option" data-days="1">내일</button>
+                                <button type="button" class="btn btn-date-option" data-days="2">모레</button>
+                                <button type="button" class="btn btn-date-option" data-days="custom">선택</button>
+                            </div>
+                            <div id="scheduleCustomDateWrap" class="mt-1" style="display:none;">
+                                <input type="date" class="form-control" id="scheduleCustomDate">
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">시간</label>
+                            <div class="btn-group-compact" id="scheduleTimePicker">
+                                <button type="button" class="btn btn-time-option" data-time="08:00">아침 8시</button>
+                                <button type="button" class="btn btn-time-option" data-time="12:00">점심 12시</button>
+                                <button type="button" class="btn btn-time-option" data-time="18:00">저녁 6시</button>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <label class="form-label fw-bold mb-1">메모</label>
+                            <textarea class="form-control" id="scheduleDesc" rows="1"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger btn-lg me-auto" id="btnDeleteSchedule" 
+                            style="display:none" onclick="deleteSchedule()">삭제</button>
+                    <button type="button" class="btn btn-secondary btn-lg" data-bs-dismiss="modal">취소</button>
+                    <button type="button" class="btn btn-primary btn-lg" onclick="submitScheduleForm()">저장</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
